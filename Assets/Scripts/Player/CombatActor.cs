@@ -8,9 +8,10 @@ namespace Player
         protected int factionID = 0;
         protected float damage = 1;
 
-        public virtual void InitializeDamage(float amount)
+        public virtual void Initialize(float damageAmount, int factionId)
         {
-            damage = amount;
+            this.damage = damageAmount;
+            this.factionID = factionId;
         }
 
         protected virtual void HitReceiver(ICombat target)

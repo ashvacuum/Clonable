@@ -1,22 +1,21 @@
+using System;
 using Skills;
 using UnityEngine;
 
 namespace Player
 {
-    public class MeleeCombatHandler : MonoBehaviour
+    public class CombatHandler : MonoBehaviour
     {
         [SerializeField] private float attackRadius = 1f;
-        [SerializeField] private float attackDistance = 2f;
+        [SerializeField] private float attackDistance = 1f;
         [SerializeField] private LayerMask attackLayerMask;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        private EquippableAbility LastActivatedAbility;
-
-        public void AttackStart(EquippableAbility ability)
+        public event Action OnPlayerAttackSequenceTriggered;
+        public void AttackStart()
         {
-            
+            OnPlayerAttackSequenceTriggered?.Invoke();
         }
 
-        public void ExecuteAttack()
+        public void ExecuteMeleeAttack()
         {
             // Perform the actual attack logic
             var attackOrigin = transform.position + transform.forward;
@@ -28,11 +27,6 @@ namespace Player
                 attackDistance,
                 attackLayerMask
             );
-            if (LastActivatedAbility != null)
-            {
-            
-            }
-        
         }
 
         void OnDrawGizmosSelected()

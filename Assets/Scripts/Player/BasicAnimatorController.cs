@@ -36,7 +36,9 @@ namespace Player
         {
             return _agent == null ? Vector3.zero : _agent.velocity.normalized;
         }
-
+        
+        
+        
         public virtual void TriggerAttack()
         {
             _animator.SetTrigger(Attack);
