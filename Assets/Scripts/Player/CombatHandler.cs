@@ -13,6 +13,7 @@ namespace Player
         public void AttackStart()
         {
             OnPlayerAttackSequenceTriggered?.Invoke();
+            OnPlayerAttackSequenceTriggered = null;
         }
 
         public void ExecuteMeleeAttack()

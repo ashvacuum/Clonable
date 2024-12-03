@@ -19,6 +19,8 @@ namespace Player
         bool IsFriend(int factionId);
 
         int GetFactionId();
+
+        Vector3 GetSpawnLocation();
     }
 }
 

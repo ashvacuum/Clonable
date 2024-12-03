@@ -5,7 +5,7 @@ namespace Player
 {
     public class CombatReceiver : MonoBehaviour, ICombat
     {
-        [SerializeField]protected int FactionID = 0;
+        [FormerlySerializedAs("factionID")] [FormerlySerializedAs("FactionID")] [SerializeField]protected int _factionID = 0;
 
         [SerializeField] protected float _maxHp = 35;
         protected float CurrentHp = 35;
@@ -23,17 +23,22 @@ namespace Player
 
         public bool IsFriend(int factionId)
         {
-            return factionId == FactionID;
+            return factionId == _factionID;
         }
 
         public int GetFactionId()
         {
-            return FactionID;
+            return _factionID;
+        }
+        
+        public Vector3 GetSpawnLocation()
+        {
+            return transform.position + Vector3.up + Vector3.forward * 1f;
         }
 
         public void SetFactionID(int newID)
         {
-            FactionID = newID;
+            _factionID = newID;
         }
         
         public virtual void TakeDamage(float damage)

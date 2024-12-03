@@ -1,9 +1,10 @@
 using System;
-using System.Drawing;
 using DG.Tweening;
+using Input;
 using NavmeshMovement;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 namespace Player
 {
@@ -14,6 +15,10 @@ namespace Player
         private NavMeshAgentController _navMeshAgentController;
         public event Action<Vector3, int> OnClickedUnit;
         private BasicAnimatorController _animController;
+        private PlayerAbilityManager _manager;
+
+        private bool _isShiftHeld;
+
         
 
         private void Start()
@@ -21,21 +26,22 @@ namespace Player
             _setter = GetComponent<DestinationSetter>();
             _navMeshAgentController = GetComponent<NavMeshAgentController>();
             _animController = GetComponent<BasicAnimatorController>();
+            _manager = FindAnyObjectByType<PlayerAbilityManager>();
+
+            InputManager.Instance.PlayerInput.TopDown.Mouse_Left.performed += PerformLeftClickAction;
+            InputManager.Instance.PlayerInput.TopDown.StopMovement_Shift.performed += ctx => { _isShiftHeld = true; };
+            InputManager.Instance.PlayerInput.TopDown.StopMovement_Shift.canceled += ctx => { _isShiftHeld = false;};
         }
 
-        // Update is called once per frame
-        private void Update()
+        private void PerformLeftClickAction(InputAction.CallbackContext ctx)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                PointClickMovement(Input.GetKey(KeyCode.LeftShift));
-            }
+            PointClickMovement(Mouse.current.position.value, _isShiftHeld);
         }
 
-        private void PointClickMovement(bool isAttack = false)
+        private void PointClickMovement(Vector2 point,bool isAttack = false)
         {
             if (Camera.main == null) return;
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var ray = Camera.main.ScreenPointToRay(point);
 
             if (!Physics.Raycast(ray, out var hit)) return;
             if (!IsPointNavigable(hit.point)) return;
@@ -43,8 +49,9 @@ namespace Player
             if (isAttack)
             {
                 _navMeshAgentController.StopMoving();
-                _animController.TriggerAttack();
                 var direction = hit.point - transform.position;
+                OnClickedUnit?.Invoke(hit.point, -1);
+                
                 Rotate(direction);
             }
             else
@@ -57,6 +64,7 @@ namespace Player
                 }
                 else
                 {
+                    Debug.Log("Combat Begun");
                     SetDestination(hit.point);
                 }
             }
@@ -72,6 +80,7 @@ namespace Player
         {
             if (_setter != null)
             {
+                _navMeshAgentController.ResumeMoving();
                 _setter.SetDestination(location);
             }
         }
