@@ -15,6 +15,8 @@ namespace Skills
         public string Description => description;
         public Sprite IconSprite => iconSprite;
 
+
+        public abstract void SetupAbility(GameObject owner);
         public abstract void LevelUp();
 
         public abstract bool Activate(GameObject owner);

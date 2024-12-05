@@ -12,6 +12,7 @@ namespace Player
         private static readonly int VelocityZ = Animator.StringToHash("Velocity Z");
         private static readonly int Moving = Animator.StringToHash("Moving");
         private static readonly int Attack = Animator.StringToHash("Attack");
+        private PointAndClickController _clickController;
 
         private void Awake()
         {

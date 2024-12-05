@@ -9,13 +9,18 @@ namespace Skills
         [SerializeField] protected float _range = 1.5f;
         
         protected ICombat _owner;
+        protected BasicAnimatorController _animator;
 
-        public void SetupAbility(GameObject owner)
+        public override void SetupAbility(GameObject owner)
         {
             if (owner.TryGetComponent<ICombat>(out var combatInterface))
             {
                 _owner = combatInterface;
                 skillLevel = 0;
+                if (owner.TryGetComponent<BasicAnimatorController>( out var animator))
+                {
+                    _animator = animator;
+                }
             }
         }
 

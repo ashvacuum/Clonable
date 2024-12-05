@@ -16,20 +16,6 @@ namespace Player
             OnPlayerAttackSequenceTriggered = null;
         }
 
-        public void ExecuteMeleeAttack()
-        {
-            // Perform the actual attack logic
-            var attackOrigin = transform.position + transform.forward;
-
-            var hits = Physics.SphereCastAll(
-                attackOrigin,
-                attackRadius,
-                transform.forward,
-                attackDistance,
-                attackLayerMask
-            );
-        }
-
         void OnDrawGizmosSelected()
         {
             if (!Application.isPlaying) return;

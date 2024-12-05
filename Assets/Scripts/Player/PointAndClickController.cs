@@ -14,8 +14,6 @@ namespace Player
         private DestinationSetter _setter;
         private NavMeshAgentController _navMeshAgentController;
         public event Action<Vector3, int> OnClickedUnit;
-        private BasicAnimatorController _animController;
-        private PlayerAbilityManager _manager;
 
         private bool _isShiftHeld;
 
@@ -25,8 +23,6 @@ namespace Player
         {
             _setter = GetComponent<DestinationSetter>();
             _navMeshAgentController = GetComponent<NavMeshAgentController>();
-            _animController = GetComponent<BasicAnimatorController>();
-            _manager = FindAnyObjectByType<PlayerAbilityManager>();
 
             InputManager.Instance.PlayerInput.TopDown.Mouse_Left.performed += PerformLeftClickAction;
             InputManager.Instance.PlayerInput.TopDown.StopMovement_Shift.performed += ctx => { _isShiftHeld = true; };
@@ -37,7 +33,6 @@ namespace Player
         {
             PointClickMovement(Mouse.current.position.value, _isShiftHeld);
         }
-
         private void PointClickMovement(Vector2 point,bool isAttack = false)
         {
             if (Camera.main == null) return;
@@ -45,13 +40,20 @@ namespace Player
 
             if (!Physics.Raycast(ray, out var hit)) return;
             if (!IsPointNavigable(hit.point)) return;
-
+            var location = hit.point;
             if (isAttack)
             {
                 _navMeshAgentController.StopMoving();
-                var direction = hit.point - transform.position;
                 OnClickedUnit?.Invoke(hit.point, -1);
-                
+                var direction = Vector3.zero;
+                try
+                {
+                    direction = location - this.gameObject.transform.position;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError($"Found Error:  {e.ToString()}");
+                }
                 Rotate(direction);
             }
             else
@@ -64,7 +66,6 @@ namespace Player
                 }
                 else
                 {
-                    Debug.Log("Combat Begun");
                     SetDestination(hit.point);
                 }
             }

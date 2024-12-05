@@ -36,6 +36,11 @@ namespace Player
             return transform.position + Vector3.up + Vector3.forward * 1f;
         }
 
+        public Quaternion GetActorRotation()
+        {
+            return transform.rotation;
+        }
+
         public void SetFactionID(int newID)
         {
             _factionID = newID;

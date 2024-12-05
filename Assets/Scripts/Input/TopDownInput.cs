@@ -164,7 +164,7 @@ namespace Player.Input
                     ""name"": """",
                     ""id"": ""15cf9aa2-c261-46dc-980a-94849014c4ea"",
                     ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""StopMovement_Shift"",

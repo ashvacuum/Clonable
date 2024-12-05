@@ -1,13 +1,13 @@
 using Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Skills
 {
     public class MeleeAbility : EquippedAbility
     {
-        [SerializeField] private float attackRadius = 1f;
-        [SerializeField] private float attackDistance = 1f;
-        [SerializeField] private LayerMask attackLayerMask;
+        [FormerlySerializedAs("attackRadius")] [SerializeField] private float _attackRadius = 1f;
+        [FormerlySerializedAs("attackLayerMask")] [SerializeField] private LayerMask _attackLayerMask;
         private ICombat _owner;
 
         public void SetupAbility(GameObject owner)
@@ -26,16 +26,20 @@ namespace Skills
     
         public override bool Activate(GameObject owner)
         {
-            if (skillLevel <= 0) return false;
-            if (!owner.TryGetComponent<CombatHandler>(out var combatHandler)) return false;
+            if (!owner.TryGetComponent<CombatHandler>(out var combatHandler))
+            {
+                Debug.LogError("No combat handler found");
+                return false;
+            }
             combatHandler.OnPlayerAttackSequenceTriggered += ExecuteAbility;
+            combatHandler.AttackStart();
             return true;
         }
 
 
         public override bool IsInRange(Vector3 position, Vector3 target)
         {
-            return Vector3.Distance(position, target) <= attackDistance;
+            return Vector3.Distance(position, target) <= _range;
         }
 
         protected override void ExecuteAbility()
@@ -44,10 +48,10 @@ namespace Skills
 
             var hits = Physics.SphereCastAll(
                 attackOrigin,
-                attackRadius,
+                _attackRadius,
                 transform.forward,
-                attackDistance,
-                attackLayerMask
+                _range,
+                _attackLayerMask
             );
 
             foreach (var hit in hits)

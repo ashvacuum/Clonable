@@ -21,6 +21,8 @@ namespace Player
         int GetFactionId();
 
         Vector3 GetSpawnLocation();
+
+        Quaternion GetActorRotation();
     }
 }
 
