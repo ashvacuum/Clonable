@@ -796,7 +796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuMusic: {fileID: 0}
   gameMusic: {fileID: 0}
-  sceneSwitchSwoosh: {fileID: 0}
+  sceneSwitchSwoosh: {fileID: 8300000, guid: 62c8ceb12b7ec429d8fd2019a2017a4e, type: 3}
   pilotLaser: {fileID: 0}
   musicChannel: {fileID: 5179305688393941724}
   sfxChannels:

@@ -54,7 +54,7 @@ namespace Player
                 {
                     Debug.LogError($"Found Error:  {e.ToString()}");
                 }
-                Rotate(direction);
+                Rotate(ref direction);
             }
             else
             {
@@ -71,13 +71,13 @@ namespace Player
             }
         }
 
-        private bool IsPointNavigable(Vector3 point, float maxDistance = 1f)
+        private bool IsPointNavigable(in Vector3 point, float maxDistance = 1f)
         {
             return NavMesh.SamplePosition(point, out var hit, maxDistance, NavMesh.AllAreas);
 
         }
 
-        void SetDestination(Vector3 location)
+        void SetDestination(in Vector3 location)
         {
             if (_setter != null)
             {
@@ -90,7 +90,7 @@ namespace Player
         /// Alternative method for instant rotation
         /// </summary>
         /// <param name="targetDirection">The direction to face</param>
-        public void Rotate(Vector3 targetDirection, bool instant = false)
+        public void Rotate(ref Vector3 targetDirection, bool instant = false)
         {
             // Ignore Y-axis to keep rotation on the horizontal plane
             targetDirection.y = 0f;

@@ -3338,7 +3338,6 @@ GameObject:
   - component: {fileID: 8129512545611624672}
   - component: {fileID: 6859643674986565887}
   - component: {fileID: 7773005868090829324}
-  - component: {fileID: 3644598186450559982}
   - component: {fileID: 2747343690227519013}
   m_Layer: 0
   m_Name: HumanMale_Character_Modified
@@ -3507,23 +3506,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &3644598186450559982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3928112336765559288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a15885b5148d784da762bb0db3fc38a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackRadius: 1
-  attackDistance: 1
-  attackLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
 --- !u!114 &2747343690227519013
 MonoBehaviour:
   m_ObjectHideFlags: 0

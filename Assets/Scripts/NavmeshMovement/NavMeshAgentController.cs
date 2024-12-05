@@ -8,7 +8,13 @@ namespace NavmeshMovement
         // Reference to the NavMeshAgent component
         private NavMeshAgent _agent;
 
-        private void Start()
+        public Vector3 GetDestination()
+        {
+            if (_agent == null) return Vector3.zero;
+            return _agent.destination;
+        }
+
+        private void Awake()
         {
             // Get the NavMeshAgent component attached to this GameObject
             _agent = GetComponent<NavMeshAgent>();

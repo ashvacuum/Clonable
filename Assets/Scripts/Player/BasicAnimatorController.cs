@@ -8,11 +8,13 @@ namespace Player
     {
         private NavMeshAgent _agent;
         private Animator _animator;
+        
         private static readonly int VelocityX = Animator.StringToHash("Velocity X");
         private static readonly int VelocityZ = Animator.StringToHash("Velocity Z");
         private static readonly int Moving = Animator.StringToHash("Moving");
         private static readonly int Attack = Animator.StringToHash("Attack");
-        private PointAndClickController _clickController;
+        private static readonly int Die = Animator.StringToHash("Die");
+        private static readonly int Revive = Animator.StringToHash("Revive");
 
         private void Awake()
         {
@@ -43,6 +45,16 @@ namespace Player
         public virtual void TriggerAttack()
         {
             _animator.SetTrigger(Attack);
+        }
+
+        public virtual void TriggerDie()
+        {
+            _animator.SetTrigger(Die);
+        }
+        
+        public virtual void TriggerRevive()
+        {
+            _animator.SetTrigger(Revive);
         }
 
     }

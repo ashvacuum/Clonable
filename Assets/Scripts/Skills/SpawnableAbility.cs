@@ -16,7 +16,7 @@ namespace Skills
         public override bool Activate(GameObject owner)
         {
             if (skillLevel <= 0) return false;
-            if (!owner.TryGetComponent<CombatHandler>(out var combatHandler))
+            if (!owner.TryGetComponent<CombatHandlerRedone>(out var combatHandler))
             {
                 Debug.LogError("Cannot find valid ability");
                 return false;
@@ -36,6 +36,7 @@ namespace Skills
             if (_projectilePrefab == null) return;
             var prefab = Instantiate(_projectilePrefab, _owner.GetSpawnLocation(), _owner.GetActorRotation());
             prefab.Initialize(10, _owner.GetFactionId());
+            AudioManager.instance.PlaySceneSwitchSwooshSFX();
         }
     }
 }

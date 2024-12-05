@@ -10,7 +10,7 @@ namespace Skills
         [FormerlySerializedAs("attackLayerMask")] [SerializeField] private LayerMask _attackLayerMask;
         private ICombat _owner;
 
-        public void SetupAbility(GameObject owner)
+        public override void SetupAbility(GameObject owner)
         {
             if (owner.TryGetComponent<ICombat>(out var combatInterface))
             {
@@ -26,7 +26,7 @@ namespace Skills
     
         public override bool Activate(GameObject owner)
         {
-            if (!owner.TryGetComponent<CombatHandler>(out var combatHandler))
+            if (!owner.TryGetComponent<CombatHandlerRedone>(out var combatHandler))
             {
                 Debug.LogError("No combat handler found");
                 return false;
